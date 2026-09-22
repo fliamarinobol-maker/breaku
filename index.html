@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#54218a">
+  <meta name="description" content="Prototipo BreakU para consultar el aforo, reservar y pedir en la cafetería del campus Montes.">
+  <title>BreakU · Cafetería campus Montes</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#inicio" aria-label="BreakU, ir al inicio">
+        <img src="assets/breaku-marca.png" alt="BreakU" width="150" height="76">
+      </a>
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <a class="nav-link active" href="#inicio">Inicio</a>
+        <a class="nav-link" href="#menu">Menú</a>
+        <a class="nav-link" href="#mi-pedido">Mi pedido</a>
+      </nav>
+      <button class="demo-trigger" id="demo-trigger" type="button" aria-controls="demo-panel" aria-expanded="false">
+        <span class="demo-dot" aria-hidden="true"></span>
+        Panel de demo
+      </button>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="notice-wrap" aria-label="Aviso del prototipo">
+      <div class="notice">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5m0 3.5v.1M10.3 3.8 2.4 17.5A2 2 0 0 0 4.1 20h15.8a2 2 0 0 0 1.7-2.5L13.7 3.8a2 2 0 0 0-3.4 0Z"/></svg>
+        <span><strong>Prototipo académico controlado.</strong> El aforo, menú y pedidos que ves son datos simulados.</span>
+      </div>
+    </section>
+
+    <section class="dashboard section-shell" id="inicio" aria-labelledby="dashboard-title">
+      <div class="section-heading compact-heading">
+        <div>
+          <p class="eyebrow">Cafetería · planta baja</p>
+          <h1 id="dashboard-title">¿Hay lugar para comer?</h1>
+        </div>
+        <div class="campus-chip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.1 7-12a7 7 0 1 0-14 0c0 6.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Campus Montes · FCEF
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="availability-card" id="availability-card">
+          <div class="availability-copy">
+            <div class="status-badge status-available" id="availability-badge">
+              <span class="status-pulse" aria-hidden="true"></span>
+              <span id="availability-label">Hay espacio disponible</span>
+            </div>
+            <h2 id="availability-title">Puedes venir sin hacer una fila larga</h2>
+            <p id="availability-detail">30 de 72 asientos están ocupados. Tiempo estimado de espera: 4 min.</p>
+
+            <div class="quick-facts" aria-label="Información de la cafetería">
+              <div class="quick-fact">
+                <span class="fact-label">Atención</span>
+                <strong>11:30–15:00</strong>
+              </div>
+              <div class="quick-fact">
+                <span class="fact-label">Espera estimada</span>
+                <strong id="wait-time">4 min</strong>
+              </div>
+              <div class="quick-fact">
+                <span class="fact-label">Acceso</span>
+                <strong>Estudiantes FCEF</strong>
+              </div>
+            </div>
+
+            <div class="primary-actions">
+              <button class="button button-light" id="reserve-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg>
+                Reservar lugar
+              </button>
+              <a class="button button-ghost" href="#menu">
+                Ver y pedir menú
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="occupancy-visual" aria-label="42 por ciento de ocupación">
+            <div class="occupancy-ring" id="occupancy-ring" style="--occupancy: 42">
+              <div class="ring-center">
+                <strong id="occupancy-percent">42%</strong>
+                <span>ocupado</span>
+              </div>
+            </div>
+            <p><strong id="free-seats">42 lugares libres</strong><span>Actualizado ahora</span></p>
+          </div>
+        </article>
+
+        <article class="order-status-card" id="mi-pedido" aria-labelledby="order-title">
+          <div class="card-topline">
+            <div>
+              <p class="eyebrow">Seguimiento</p>
+              <h2 id="order-title">Mi pedido</h2>
+            </div>
+            <span class="order-number" id="order-number" hidden></span>
+          </div>
+
+          <div class="empty-order" id="empty-order">
+            <div class="empty-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 7h14l-1 13H6L5 7Zm4 0V5a3 3 0 0 1 6 0v2"/></svg>
+            </div>
+            <h3>Aún no hiciste un pedido</h3>
+            <p>Elige tu comida y te avisaremos cuando esté lista para recoger.</p>
+            <a class="text-link" href="#menu">Ver el menú <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="active-order" id="active-order" hidden>
+            <div class="order-summary">
+              <div>
+                <span class="fact-label">Retiro estimado</span>
+                <strong id="pickup-estimate">12:40</strong>
+              </div>
+              <button class="qr-mini-button" id="show-qr-button" type="button" aria-label="Mostrar código QR del pedido">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm11 0h2v2h-2v-2Zm3 0h2v5h-2v-5Zm-3 4h2v2h-2v-2Zm-3-6h2v2h-2v-2Zm0 4h2v4h-2v-4Z"/></svg>
+                Ver QR
+              </button>
+            </div>
+            <ol class="progress-list" aria-label="Estado del pedido">
+              <li class="progress-step" data-step="received">
+                <span class="step-marker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></span>
+                <div><strong>Pedido recibido</strong><span>La cafetería recibió tu orden</span></div>
+              </li>
+              <li class="progress-step" data-step="preparing">
+                <span class="step-marker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9l5 3M4.9 5.7a9 9 0 1 0 2-1.7"/></svg></span>
+                <div><strong>En preparación</strong><span>Están preparando tu comida</span></div>
+              </li>
+              <li class="progress-step" data-step="ready">
+                <span class="step-marker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.5 11h-11L5 8Zm3 0a4 4 0 0 1 8 0"/></svg></span>
+                <div><strong>Listo para recoger</strong><span>Muestra tu QR a la casera</span></div>
+              </li>
+            </ol>
+            <p class="order-message" id="order-message">Recibimos tu pedido.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="alternatives-section section-shell" id="alternatives" hidden aria-labelledby="alternatives-title">
+      <div class="alternatives-card">
+        <div class="alternatives-intro">
+          <span class="illustration-badge" aria-hidden="true">!</span>
+          <div>
+            <p class="eyebrow">Plan B de BreakU</p>
+            <h2 id="alternatives-title">La cafetería está llena ahora</h2>
+            <p>Puedes reservar otro horario o consultar alternativas cercanas según tu presupuesto.</p>
+          </div>
+        </div>
+        <div class="alternative-grid">
+          <article class="alternative-item">
+            <span class="alt-icon" aria-hidden="true">🥣</span>
+            <div><strong>Sopitas cerca del campus</strong><span>Desde Bs 8 · 2–4 min</span></div>
+          </article>
+          <article class="alternative-item">
+            <span class="alt-icon" aria-hidden="true">🥤</span>
+            <div><strong>Jugos en Mercado Lanza</strong><span>Desde Bs 6 · 5–7 min</span></div>
+          </article>
+          <article class="alternative-item">
+            <span class="alt-icon" aria-hidden="true">🍽️</span>
+            <div><strong>Almuerzo económico cercano</strong><span>Desde Bs 12 · 4–6 min</span></div>
+          </article>
+        </div>
+        <p class="data-note">Opciones ilustrativas para mostrar cómo funcionaría una futura red de aliados.</p>
+      </div>
+    </section>
+
+    <section class="menu-section section-shell" id="menu" aria-labelledby="menu-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Menú demostrativo</p>
+          <h2 id="menu-title">Elige ahora, recoge sin fila</h2>
+          <p>Haz tu pedido y recibe un QR para presentarlo en la cafetería.</p>
+        </div>
+        <button class="cart-button" id="cart-button" type="button" aria-controls="cart-drawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2 11h10l2-8H6m2 12h.1m8.9 0h.1"/></svg>
+          Mi pedido
+          <span class="cart-count" id="cart-count" aria-label="0 productos">0</span>
+        </button>
+      </div>
+
+      <div class="menu-grid">
+        <article class="menu-card featured">
+          <div class="food-visual food-purple" aria-hidden="true"><span>🍲</span><small>Más pedido</small></div>
+          <div class="menu-card-body">
+            <div class="menu-heading-row"><h3>Almuerzo del día</h3><strong>Bs 14</strong></div>
+            <p>Sopa, segundo y refresco. Opción completa para tu descanso.</p>
+            <div class="menu-footer"><span class="prep-time">Listo en 15 min</span><button class="add-button" type="button" data-name="Almuerzo del día" data-price="14">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="food-visual food-orange" aria-hidden="true"><span>🍛</span></div>
+          <div class="menu-card-body">
+            <div class="menu-heading-row"><h3>Plato económico</h3><strong>Bs 11</strong></div>
+            <p>Una opción rápida y rendidora para comer entre clases.</p>
+            <div class="menu-footer"><span class="prep-time">Listo en 12 min</span><button class="add-button" type="button" data-name="Plato económico" data-price="11">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="food-visual food-lilac" aria-hidden="true"><span>🥪</span></div>
+          <div class="menu-card-body">
+            <div class="menu-heading-row"><h3>Sándwich caliente</h3><strong>Bs 8</strong></div>
+            <p>Preparado al momento para una pausa más corta.</p>
+            <div class="menu-footer"><span class="prep-time">Listo en 8 min</span><button class="add-button" type="button" data-name="Sándwich caliente" data-price="8">Agregar</button></div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="food-visual food-blue" aria-hidden="true"><span>🥤</span></div>
+          <div class="menu-card-body">
+            <div class="menu-heading-row"><h3>Jugo de temporada</h3><strong>Bs 5</strong></div>
+            <p>Una bebida fresca para acompañar tu pedido.</p>
+            <div class="menu-footer"><span class="prep-time">Listo en 5 min</span><button class="add-button" type="button" data-name="Jugo de temporada" data-price="5">Agregar</button></div>
+          </div>
+        </article>
+      </div>
+      <p class="data-note menu-note">Los productos, precios y tiempos son ejemplos del prototipo; la versión real se coordinaría con la cafetería.</p>
+    </section>
+
+    <section class="how-section section-shell" aria-labelledby="how-title">
+      <div class="how-card">
+        <div class="how-brand">
+          <img src="assets/breaku-identidad.png" alt="BreakU: Tu descanso es para comer, no para hacer fila" width="686" height="610">
+        </div>
+        <div class="how-copy">
+          <p class="eyebrow">Una pausa mejor organizada</p>
+          <h2 id="how-title">Todo lo necesario, en cuatro pasos</h2>
+          <ol class="how-steps">
+            <li><span>1</span><div><strong>Consulta el aforo</strong><p>Revisa si hay espacio antes de bajar.</p></div></li>
+            <li><span>2</span><div><strong>Reserva o pide</strong><p>Elige un horario y tu comida.</p></div></li>
+            <li><span>3</span><div><strong>Sigue el pedido</strong><p>Sabes cuándo lo están preparando.</p></div></li>
+            <li><span>4</span><div><strong>Recoge con QR</strong><p>Muestra el código y disfruta tu descanso.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div><strong>BreakU</strong><span>Prototipo para la Facultad de Ciencias Económicas y Financieras · UMSA</span></div>
+      <span>EXPOECO 2026 · Categoría B</span>
+    </div>
+  </footer>
+
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    <a class="mobile-nav-item active" href="#inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3v-9Z"/></svg><span>Inicio</span></a>
+    <a class="mobile-nav-item" href="#menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8m3-8v8M7 7h3m-1 4v10m7-18v18m0-18c3 3 3 7 0 9"/></svg><span>Menú</span></a>
+    <a class="mobile-nav-item" href="#mi-pedido"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1 13H6L5 7Zm4 0V5a3 3 0 0 1 6 0v2"/></svg><span>Mi pedido</span></a>
+    <button class="mobile-nav-item" id="mobile-demo-trigger" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10m4 0h2M4 17h2m4 0h10M14 4v6M6 14v6"/></svg><span>Demo</span></button>
+  </nav>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <aside class="demo-panel" id="demo-panel" aria-label="Controles de demostración" aria-hidden="true">
+    <div class="panel-header">
+      <div><p class="eyebrow">Solo para la exposición</p><h2>Control de la demo</h2></div>
+      <button class="icon-button" id="close-demo" type="button" aria-label="Cerrar panel de demo">×</button>
+    </div>
+    <div class="demo-group">
+      <h3>1. Simular aforo</h3>
+      <p>Cambia el estado que verá el jurado.</p>
+      <div class="segmented-control" role="group" aria-label="Estado del aforo">
+        <button class="demo-option active" type="button" data-occupancy="normal">Disponible</button>
+        <button class="demo-option" type="button" data-occupancy="high">Casi lleno</button>
+        <button class="demo-option" type="button" data-occupancy="full">Lleno</button>
+      </div>
+    </div>
+    <div class="demo-group">
+      <h3>2. Simular pedido</h3>
+      <p>Si no hay pedido, se cargará uno de ejemplo.</p>
+      <div class="status-controls">
+        <button class="status-control" type="button" data-order-status="received"><span>1</span>Recibido</button>
+        <button class="status-control" type="button" data-order-status="preparing"><span>2</span>Preparando</button>
+        <button class="status-control" type="button" data-order-status="ready"><span>3</span>Listo</button>
+      </div>
+    </div>
+    <div class="demo-tip">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6m-5 3h4M8.5 14.5C7 13.3 6 11.3 6 9a6 6 0 1 1 12 0c0 2.3-1 4.3-2.5 5.5-.7.6-1.1 1.2-1.2 1.5H9.7c-.1-.3-.5-.9-1.2-1.5Z"/></svg>
+      <p><strong>Tip para exponer:</strong> empieza con “Disponible”, crea un pedido y avánzalo hasta “Listo”. Después cambia a “Lleno” para mostrar las alternativas.</p>
+    </div>
+    <button class="reset-button" id="reset-demo" type="button">Reiniciar demostración</button>
+  </aside>
+
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Resumen de pedido" aria-hidden="true">
+    <div class="panel-header">
+      <div><p class="eyebrow">Tu selección</p><h2>Preparar pedido</h2></div>
+      <button class="icon-button" id="close-cart" type="button" aria-label="Cerrar pedido">×</button>
+    </div>
+    <div class="cart-empty" id="cart-empty">
+      <span aria-hidden="true">🥄</span>
+      <h3>Tu pedido está vacío</h3>
+      <p>Agrega al menos un producto del menú.</p>
+    </div>
+    <div class="cart-content" id="cart-content" hidden>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-total"><span>Total</span><strong id="cart-total">Bs 0</strong></div>
+      <form id="checkout-form">
+        <label for="order-student">Código universitario</label>
+        <input id="order-student" name="order-student" autocomplete="off" placeholder="Ej. 1234567" required>
+        <label for="pickup-time">Hora de recojo</label>
+        <select id="pickup-time" name="pickup-time" required>
+          <option value="12:25">12:25</option>
+          <option value="12:40" selected>12:40</option>
+          <option value="12:55">12:55</option>
+          <option value="13:10">13:10</option>
+        </select>
+        <p class="privacy-note">En el prototipo no se guarda ningún dato.</p>
+        <button class="button button-primary full-width" type="submit">Confirmar y generar QR</button>
+      </form>
+    </div>
+  </aside>
+
+  <dialog class="modal" id="reservation-dialog" aria-labelledby="reservation-title">
+    <form method="dialog" class="modal-shell" id="reservation-form">
+      <button class="modal-close" value="cancel" aria-label="Cerrar reserva">×</button>
+      <div class="modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></div>
+      <p class="eyebrow">Reserva demostrativa</p>
+      <h2 id="reservation-title">Guarda tu lugar</h2>
+      <p class="modal-lead">Elige un horario para llegar cuando haya un asiento disponible.</p>
+      <div class="form-grid">
+        <div class="field full-field"><label for="reserve-name">Nombre</label><input id="reserve-name" name="reserve-name" placeholder="Tu nombre" required></div>
+        <div class="field full-field"><label for="reserve-code">Código universitario</label><input id="reserve-code" name="reserve-code" placeholder="Ej. 1234567" required></div>
+        <div class="field full-field">
+          <label for="reserve-career">Carrera</label>
+          <select id="reserve-career" name="reserve-career" required>
+            <option value="">Selecciona una carrera</option>
+            <option>Economía</option><option>Contaduría Pública</option><option>Administración de Empresas</option><option>Otra carrera de la FCEF</option>
+          </select>
+        </div>
+        <fieldset class="field full-field slot-fieldset">
+          <legend>Horario</legend>
+          <div class="time-options">
+            <label><input type="radio" name="reserve-time" value="12:15" required><span>12:15</span></label>
+            <label><input type="radio" name="reserve-time" value="12:30"><span>12:30</span></label>
+            <label><input type="radio" name="reserve-time" value="12:45"><span>12:45</span></label>
+            <label><input type="radio" name="reserve-time" value="13:00"><span>13:00</span></label>
+          </div>
+        </fieldset>
+      </div>
+      <p class="privacy-note">La verificación estudiantil sería obligatoria en la versión real. Aquí no se guarda ningún dato.</p>
+      <button class="button button-primary full-width" type="submit" value="default">Confirmar reserva</button>
+    </form>
+  </dialog>
+
+  <dialog class="modal success-modal" id="success-dialog" aria-labelledby="success-title">
+    <div class="modal-shell success-shell">
+      <button class="modal-close" id="close-success" aria-label="Cerrar confirmación">×</button>
+      <div class="success-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+      <p class="eyebrow" id="success-eyebrow">Pedido confirmado</p>
+      <h2 id="success-title">¡Listo! Ya no tienes que hacer fila</h2>
+      <p class="modal-lead" id="success-message">Tu pedido fue enviado a la cafetería.</p>
+      <div class="qr-card">
+        <div class="qr-grid" id="qr-grid" aria-label="Código QR demostrativo"></div>
+        <div><span>Tu código BreakU</span><strong id="success-code">BRK-204</strong><small id="success-time">Recojo: 12:40</small></div>
+      </div>
+      <p class="qr-instruction">Muestra este QR a la casera al llegar.</p>
+      <button class="button button-primary full-width" id="go-to-order" type="button">Ver estado de mi pedido</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
